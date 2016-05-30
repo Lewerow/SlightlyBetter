@@ -1,0 +1,6 @@
+before_script:
+  - echo Started build
+
+test_script:
+  script:
+    - echo Executing tests
