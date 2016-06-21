@@ -1,0 +1,7 @@
+<div>
+  <h1 .customTitle> Available projects:
+  <p>
+    <ul #projectList>
+      <li> Project 1
+      <li> Project 2
+      <li> Super project

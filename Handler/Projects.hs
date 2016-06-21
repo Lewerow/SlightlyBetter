@@ -6,3 +6,4 @@ import Yesod.Form.Bootstrap3()
 getProjectsR :: Handler Html
 getProjectsR = defaultLayout $ do
 	setTitle "Projects"
+	$(widgetFile "projects")
