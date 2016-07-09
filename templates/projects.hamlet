@@ -1,7 +1,9 @@
 <div>
-  <h1 .customTitle> Available projects:
-  <p>
-    <ul #projectList>
-      <li> Project 1
-      <li> Project 2
-      <li> Super project
+  <h1 .page-header> Available projects:
+  <div .jumbotron>
+    $if null projects
+      <p> There are no ongoing projects
+    $else
+      <ul .list-group>
+        $forall projectName <- projects
+          <li .list-group-item> #{projectName}

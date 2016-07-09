@@ -1,9 +1,0 @@
-#projectList
-    text-align: center;
-    margin-bottom: 30px
-
-.customTitle
-    color: #FF0000
-
-div
-    color: #00FF00
