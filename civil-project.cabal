@@ -23,6 +23,7 @@ library
                      Handler.Common
                      Handler.Home
                      Handler.Comment
+                     Handler.Project
                      Handler.Projects
 
     if flag(dev) || flag(library-only)
@@ -103,7 +104,7 @@ test-suite test
     other-modules:     Handler.CommentSpec
                        Handler.CommonSpec
                        Handler.HomeSpec
-                       Domain.ProjectSpec
+                       Handler.ProjectSpec
                        TestImport
     hs-source-dirs:    test
     ghc-options:       -Wall
