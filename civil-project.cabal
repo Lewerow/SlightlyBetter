@@ -25,6 +25,7 @@ library
                      Handler.Comment
                      Handler.Project
                      Handler.Projects
+                     Database.Projects
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

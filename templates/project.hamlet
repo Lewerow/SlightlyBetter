@@ -1,2 +1,3 @@
 <div>
-  <h1 .page-header> Project: #{show projectId}
+  <h1 .page-header> Project ID: #{show projectId}
+  <p> Name: #{projectName}
