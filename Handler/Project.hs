@@ -16,6 +16,7 @@ renderPage :: (Int, Text) -> Widget
 renderPage projectEntry = do
   setTitle $ ("Project " ++ projectTitle)
   $(widgetFile "project")
+  $(widgetFile "back-to-projects")
   where
     projectTitle = (toHtml projectId) ++ (toHtml projectName)
     projectName = snd projectEntry
