@@ -14,11 +14,12 @@ selectPage projectId = maybe notFound renderPage projectEntry
 
 renderPage :: (Int, Text) -> Widget
 renderPage projectEntry = do
-  setTitle $ ("Project " ++ projectTitle)
+  app <- getYesod
+  setTitle $ (toHtml $ (appName app)) ++ ": " ++ projectTitle
   $(widgetFile "project")
   $(widgetFile "back-to-projects")
   where
-    projectTitle = (toHtml projectId) ++ (toHtml projectName)
+    projectTitle = (toHtml projectName) ++ "(" ++ (toHtml projectId)  ++ ")"
     projectName = snd projectEntry
     projectId = fst projectEntry
 
