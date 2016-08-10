@@ -5,5 +5,5 @@
       <p> There are no ongoing projects
     $else
       <ul .list-group>
-        $forall (projectId, projectName) <- projects
-          <li .list-group-item> <a href="@{ProjectR projectId}">#{projectName}</a>
+        $forall Project {..} <- projects
+          <li .list-group-item> <a href="@{ProjectR projectIdentifier}">#{projectName}</a>

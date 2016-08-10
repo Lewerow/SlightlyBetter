@@ -1,4 +1,6 @@
 module Handler.Project where
+
+import Domain.Project
 import Import
 
 import Database.Projects
@@ -10,9 +12,9 @@ getProjectR projectId = defaultLayout $ selectPage projectId
 selectPage :: Int -> Widget
 selectPage projectId = maybe notFound renderPage projectEntry
   where
-    projectEntry = find (\x -> (fst x) == projectId) projects
+    projectEntry = find (\x -> (projectIdentifier x) == projectId) projects
 
-renderPage :: (Int, Text) -> Widget
+renderPage :: Project -> Widget
 renderPage projectEntry = do
   app <- getYesod
   setTitle $ (toHtml $ (appName app)) ++ ": " ++ projectTitle
@@ -20,6 +22,6 @@ renderPage projectEntry = do
   $(widgetFile "back-to-projects")
   where
     projectTitle = (toHtml projectName) ++ "(" ++ (toHtml projectId)  ++ ")"
-    projectName = snd projectEntry
-    projectId = fst projectEntry
+    projectName = projectShortName projectEntry
+    projectId = projectIdentifier projectEntry
 
