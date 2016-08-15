@@ -2,7 +2,6 @@ module Database.Projects (projects) where
 import Import
 
 import Data.Time.Clock
-import Domain.Project
 
 time:: Integer -> Integer -> UTCTime
 time a b = UTCTime (fromGregorian a 1 1) (secondsToDiffTime b)

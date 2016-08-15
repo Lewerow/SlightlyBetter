@@ -1,18 +1,16 @@
 module Handler.Project where
 
-import Domain.Project
 import Import
 
-import Database.Projects
 import Yesod.Bootstrap()
 
 getProjectR :: Int -> Handler Html
 getProjectR projectId = defaultLayout $ selectPage projectId
 
 selectPage :: Int -> Widget
-selectPage projectId = maybe notFound renderPage projectEntry
-  where
-    projectEntry = find (\x -> (projectIdentifier x) == projectId) projects
+selectPage projectId = do
+  (Entity _ project) <- handlerToWidget $ runDB $ getBy404 $ UID projectId
+  renderPage project
 
 renderPage :: Project -> Widget
 renderPage projectEntry = do

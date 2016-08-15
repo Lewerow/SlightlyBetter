@@ -20,7 +20,6 @@ library
                      Model
                      Settings
                      Settings.StaticFiles
-                     Domain.Project
                      Handler.Common
                      Handler.Home
                      Handler.Comment

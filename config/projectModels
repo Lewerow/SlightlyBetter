@@ -1,0 +1,7 @@
+Project
+      identifier Int
+      name Text
+      shortName Text
+      deadline UTCTime
+      UID identifier
+      deriving Show
