@@ -8,5 +8,5 @@
 
 /comments CommentR POST
 
-/projects ProjectsR GET
+/project ProjectsR GET
 /project/#Int ProjectR GET

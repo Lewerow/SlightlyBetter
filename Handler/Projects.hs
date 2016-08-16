@@ -2,9 +2,12 @@ module Handler.Projects where
 import Import
 
 import Yesod.Bootstrap()
-import Database.Projects(projects)
 
 getProjectsR :: Handler Html
-getProjectsR = defaultLayout $ do
-  setTitle "Projects"
-  $(widgetFile "projects")
+getProjectsR = do
+    projects <- runDB $ do
+       dbProjects <- selectList [] []
+       return $ map entityVal dbProjects
+    defaultLayout $ do
+        setTitle "Projects"
+        $(widgetFile "projects")
