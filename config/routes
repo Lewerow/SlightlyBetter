@@ -10,3 +10,4 @@
 
 /project ProjectsR GET
 /project/#Int ProjectR GET
+/project/#Int/edit ProjectEditR GET POST

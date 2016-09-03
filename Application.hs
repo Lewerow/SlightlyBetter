@@ -37,6 +37,7 @@ import Handler.Home
 import Handler.Comment
 import Handler.Project
 import Handler.Projects
+import Handler.ProjectEdit
 
 import Database.Projects (projects)
 

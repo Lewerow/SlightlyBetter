@@ -1,0 +1,4 @@
+<div .jumbotron>
+  <h2> Project edition
+  <form method=post action=@{ProjectEditR projectId} enctype=#{enctype}>
+    ^{formWidget}

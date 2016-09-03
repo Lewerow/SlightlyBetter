@@ -25,6 +25,7 @@ library
                      Handler.Comment
                      Handler.Project
                      Handler.Projects
+                     Handler.ProjectEdit
                      Database.Projects
 
     if flag(dev) || flag(library-only)
