@@ -37,7 +37,9 @@ renderForm :: Int -> Maybe Project -> Handler Html
 renderForm projectId projectEntry = do
   ((result, formWidget), enctype) <- runFormPost (projectForm projectId projectEntry)
   case result of
-    FormSuccess project -> redirect $ ProjectR (projectIdentifier project)
+    FormSuccess project -> do
+       (Entity upsertedId upsertedProject) <- runDB $ upsert project []
+       redirect $ ProjectR (projectIdentifier upsertedProject)
     _ -> defaultLayout $ do
       app <- getYesod
       setTitle $ (toHtml $ (appName app)) ++ ": editing projects"

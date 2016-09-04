@@ -2,6 +2,7 @@ module Handler.Project where
 
 import Import
 
+import Data.Time.Clock()
 import Yesod.Bootstrap()
 
 getProjectR :: Int -> Handler Html
@@ -19,7 +20,8 @@ renderPage projectEntry = do
   $(widgetFile "project")
   $(widgetFile "back-to-projects")
   where
-    projectTitle = (toHtml projectName) ++ "(" ++ (toHtml projectId)  ++ ")"
-    projectName = projectShortName projectEntry
+    projectTitle = (toHtml shortName) ++ "(" ++ (toHtml projectId)  ++ ")"
+    shortName = projectShortName projectEntry
+    name = projectName projectEntry
     projectId = projectIdentifier projectEntry
-
+    deadline = projectDeadline projectEntry
