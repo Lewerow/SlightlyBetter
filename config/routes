@@ -9,5 +9,6 @@
 /comments CommentR POST
 
 /project ProjectsR GET
-/project/#Int ProjectR GET
-/project/#Int/edit ProjectEditR GET POST
+/project/#ProjectId ProjectR GET DELETE
+/add/project ProjectEditNoIdR GET POST
+/project/edit/#ProjectId ProjectEditIdR GET POST

@@ -1,4 +1,5 @@
 <div .jumbotron>
   <h2> Project edition
-  <form method=post action=@{ProjectEditR projectId} enctype=#{enctype}>
+  <form method=post action=@{postRoute} enctype=#{enctype}>
     ^{formWidget}
+  <a role="button" href=@{backRoute} .btn .btn-default>Back to view

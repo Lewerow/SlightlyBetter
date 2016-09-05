@@ -5,9 +5,7 @@ import Yesod.Bootstrap()
 
 getProjectsR :: Handler Html
 getProjectsR = do
-    projects <- runDB $ do
-       dbProjects <- selectList [] []
-       return $ map entityVal dbProjects
+    projects <- runDB $ selectList [] []
     defaultLayout $ do
         setTitle "Projects"
         $(widgetFile "projects")

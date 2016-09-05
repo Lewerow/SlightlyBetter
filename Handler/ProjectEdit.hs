@@ -5,43 +5,56 @@ import Import
 import Yesod.Form.Bootstrap3
 import Data.Time.Clock
 
+utcDayField :: Field Handler UTCTime
 utcDayField = checkMMap (return . Right . toUTCTime :: (Day -> Handler (Either Text UTCTime))) utctDay dayField
   where
   toUTCTime x = UTCTime x (secondsToDiffTime 0)
 
-postProjectEditR :: Int -> Handler Html
-postProjectEditR projectId =  do
-  project <- runDB $ getBy $ UID projectId
-  renderForm projectId $ (\(Entity _ proj) -> proj) `fmap` project
+postProjectEditR :: Maybe ProjectId -> Handler Html
+postProjectEditR projectId = do
+  project <- (runDB . get) `mapM` projectId
+  renderForm projectId $ join project
 
-getProjectEditR :: Int -> Handler Html
-getProjectEditR = postProjectEditR
+postProjectEditIdR :: ProjectId -> Handler Html
+postProjectEditIdR = postProjectEditR . Just
 
-projectAForm :: Int -> Maybe Project -> AForm Handler Project
-projectAForm projectId project = Project
-    <$> areq hiddenField identifierConfig (pure projectId)
-    <*> areq textField nameConfig (projectName <$> project)
+getProjectEditIdR :: ProjectId -> Handler Html
+getProjectEditIdR = postProjectEditIdR
+
+postProjectEditNoIdR :: Handler Html
+postProjectEditNoIdR = postProjectEditR Nothing
+
+getProjectEditNoIdR :: Handler Html
+getProjectEditNoIdR = postProjectEditNoIdR
+
+projectAForm :: Maybe Project ->AForm Handler Project
+projectAForm project = Project
+    <$> areq textField nameConfig (projectName <$> project)
     <*> areq textField shortNameConfig (projectShortName <$> project)
     <*> areq utcDayField timeFieldConfig (projectDeadline <$> project)
-    <* bootstrapSubmit ("Modify" :: BootstrapSubmit Text)
+    <* bootstrapSubmit (maybe "Add" (const "Modify") project :: BootstrapSubmit Text)
     where
-      identifierConfig = bfs ("" :: Text)
       nameConfig = withPlaceholder "Project name" $ bfs ("Project name" :: Text)
       shortNameConfig = withPlaceholder "Short project name" $ bfs ("Short project name" :: Text)
       timeFieldConfig = bfs ("Project deadline" :: Text)
 
-projectForm :: Int -> Maybe Project -> Html -> MForm Handler (FormResult Project, Widget)
-projectForm projectId project = renderBootstrap3 BootstrapBasicForm $ projectAForm projectId project
+projectForm :: Maybe Project -> Html -> MForm Handler (FormResult Project, Widget)
+projectForm project = renderBootstrap3 BootstrapBasicForm $ projectAForm project
 
-renderForm :: Int -> Maybe Project -> Handler Html
+renderForm :: Maybe ProjectId -> Maybe Project -> Handler Html
 renderForm projectId projectEntry = do
-  ((result, formWidget), enctype) <- runFormPost (projectForm projectId projectEntry)
+  ((result, formWidget), enctype) <- runFormPost (projectForm projectEntry)
   case result of
     FormSuccess project -> do
-       (Entity upsertedId upsertedProject) <- runDB $ upsert project []
-       redirect $ ProjectR (projectIdentifier upsertedProject)
+       upsertedId <- runDB $ updateCall project
+       redirect $ ProjectR upsertedId
     _ -> defaultLayout $ do
       app <- getYesod
       setTitle $ (toHtml $ (appName app)) ++ ": editing projects"
       $(widgetFile "project-edition")
       $(widgetFile "back-to-projects")
+      where
+        backRoute = maybe ProjectsR ProjectR projectId
+        postRoute = maybe ProjectEditNoIdR ProjectEditIdR projectId
+    where
+       updateCall = maybe insert (\pid val -> repsert pid val >> return pid) projectId

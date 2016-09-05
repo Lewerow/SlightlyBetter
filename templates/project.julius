@@ -1,0 +1,3 @@
+jQuery("#delete-project").on("click", function() {
+  jQuery.ajax("@{ProjectR projectId}", { method: "DELETE" });
+})

@@ -1,9 +1,10 @@
 <div>
   <h1 .page-header> Available projects:
   <div .jumbotron>
+    <a type="Button" href=@{ProjectEditNoIdR} .btn .btn-default>Add new project
     $if null projects
       <p> There are no ongoing projects
     $else
       <ul .list-group>
-        $forall Project {..} <- projects
-          <li .list-group-item> <a href="@{ProjectR projectIdentifier}">#{projectName}</a>
+        $forall (Entity projectId Project {..}) <- projects
+          <li .list-group-item> <a href="@{ProjectR projectId}">#{projectName}</a>

@@ -1,5 +1,7 @@
 <div>
-  <h1 .page-header> Project ID: #{show projectId}
-  <p> Name: #{name}
+  <h1 .page-header> Project name: #{name}
   <p> Short name: #{shortName}
   <p> Deadline: #{show $ utctDay deadline}
+  <div>
+    <a href=@{ProjectEditIdR projectId} role="button" .btn .btn-primary>Edit
+    <a href=@{ProjectsR} role="button" .btn .btn-danger #delete-project>Delete
