@@ -25,7 +25,9 @@ renderPage projectId projectEntry = do
     name = projectName projectEntry
     deadline = projectDeadline projectEntry
 
-deleteProjectR :: ProjectId -> Handler Html
-deleteProjectR projectId = do
-  _ <- runDB $ delete projectId
-  redirect ProjectsR
+deleteProjectR :: ProjectId -> Handler TypedContent
+deleteProjectR projectId = selectRep $ do
+    provideRep $ do
+      _ <- runDB $ delete projectId
+      renderUrl <- getUrlRender
+      returnJson $ object ["target" .= (renderUrl ProjectsR)]
