@@ -1,2 +1,2 @@
-module null.ProjectSpec where
+module Domain.ProjectSpec where
 
