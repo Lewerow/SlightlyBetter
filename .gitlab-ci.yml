@@ -1,6 +1,46 @@
-before_script:
-  - echo Started build
-
-test_script:
+unit-tests:
+  stage: dev-testing
   script:
-    - echo Executing tests
+    - stack setup
+    - stack test
+  cache:
+    paths:
+      - .stack-work
+
+lint:
+  stage: dev-testing
+  script:
+    - echo We have no linters for this project
+
+preparing-package:
+  stage: packaging
+  script:
+    - stack setup
+    - mkdir build
+    - stack install --local-bin-path build
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 hr
+  cache:
+    paths:
+      - .stack-work
+
+integration-tests:
+  stage: integration-testing
+  script:
+    - echo We should test integration here!
+
+release:
+  stage: publishing
+  only:
+    - master
+  script:
+    - echo Here goes the release job!
+
+stages:
+  - dev-testing
+  - packaging
+  - integration-testing
+  - publishing
+
