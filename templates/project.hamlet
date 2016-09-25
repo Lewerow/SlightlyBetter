@@ -4,4 +4,4 @@
   <p> Deadline: #{show $ utctDay deadline}
   <div>
     <a href=@{ProjectEditIdR projectId} role="button" .btn .btn-primary>Edit
-    <button href=@{ProjectsR} .btn .btn-danger #delete-project>Delete
+    <button .btn .btn-danger #delete-project>Delete

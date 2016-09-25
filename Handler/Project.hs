@@ -17,6 +17,7 @@ renderPage :: ProjectId -> Project -> Widget
 renderPage projectId projectEntry = do
   app <- getYesod
   setTitle $ (toHtml $ (appName app)) ++ ": " ++ projectTitle
+  addScript $ StaticR js_all_js
   $(widgetFile "project")
   $(widgetFile "back-to-projects")
   where

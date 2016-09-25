@@ -1,8 +1,0 @@
-jQuery("#delete-project").on("click", function() {
-  jQuery.ajax("@{ProjectR projectId}", {
-    method: "DELETE",
-    headers: { Accept: "application/json; charset=utf-8" }
-  }).done(function(response) {
-    window.location.replace(response.target);
-  });
-});
